@@ -27,7 +27,7 @@ const HomePage = () => {
         setUsername(user);
         if (!status) {
           removeCookie("token");
-          // navigate("/login");
+          navigate("/login");
         } else {
           toast(`Hello ${user}`, {
             position: "top-right",
