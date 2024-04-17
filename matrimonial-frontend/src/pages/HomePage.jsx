@@ -1,16 +1,19 @@
-import React from 'react'
-import { useEffect, useState } from "react";
+import React, { useContext } from 'react'
+import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import Header from '../components/Header';
+import { AppContext } from '../contexts/AppContext';
+
 
 const HomePage = () => {
-  console.log("gomepage"); // This will only log once
+ 
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies(['token']);
   const [username, setUsername] = useState("");
-
+  const value = useContext(AppContext)
   // Dependency array with an empty array [] to run only once on mount
   useEffect(() => {
    console.log("useEffect called");
@@ -25,13 +28,14 @@ const HomePage = () => {
         console.log("Data fetched:", data); // Log fetched data
         const { status, user } = data;
         setUsername(user);
+        value.setisUserLoggedIn(user)
         if (!status) {
           removeCookie("token");
-          navigate("/login");
+          // navigate("/login");
         } else {
-          toast(`Hello ${user}`, {
-            position: "top-right",
-          })
+          // toast(`Hello ${user}`, {
+          //   position: "top-right",
+          // })
         }
       } catch (error) {console.error("Error verifying cookie:", error);
       }
@@ -47,17 +51,19 @@ const HomePage = () => {
   };
 
   return (
+
     <>
+      
       <div className="home_page">
         <h4>
-          {" sdvfcsdcvs"}
           Welcome <span>{username}</span>
         </h4>
         <button onClick={Logout}>LOGOUT</button>
       </div>
       <ToastContainer />
-    </>
+  </>    
   );
+  
 };
 
 export default HomePage;

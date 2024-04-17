@@ -11,11 +11,15 @@ import Login  from './pages/Login';
 import Header from './components/Header';
 import Layout from './layouts/Layout';
 import Signup  from './pages/Signup';
+import { AppContext } from './contexts/AppContext';
+import { useState } from 'react';
 
 function App() {
+  const [isUserLoggedIn, setisUserLoggedIn] = useState(undefined)
+
   return (
     <>
-  
+    <AppContext.Provider value={{isUserLoggedIn, setisUserLoggedIn}}>
     {/* <Router> */}
       <Routes>
         <Route exact path="/" element ={<Layout><HomePage/></Layout>}></Route>
@@ -23,6 +27,7 @@ function App() {
         <Route exact path="/signup" element ={<Layout><Signup/></Layout>}></Route>
       </Routes>
     {/* </Router> */}
+    </AppContext.Provider>
     </>
   );
 }
