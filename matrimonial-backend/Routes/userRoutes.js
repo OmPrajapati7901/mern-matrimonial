@@ -20,7 +20,8 @@ router.post('/register', userVerification , async (req, res) => {
   // GET to retrieve user profile
   router.get('/profile/:id', async (req, res) => {
     try {
-      const user = await userProfile.findById(req.params.id);
+      console.log(req.params.id)
+      const user = await UserProfile.findById(req.params.id);
       res.status(200).send(user);
     } catch (error) {
       res.status(404).send({ message: 'User not found' });
@@ -30,7 +31,7 @@ router.post('/register', userVerification , async (req, res) => {
   // PUT to update user profile
   router.put('/profile/:id', async (req, res) => {
     try {
-      const updatedUser = await userProfile.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const updatedUser = await UserProfile.findByIdAndUpdate(req.params.id, req.body, { new: true });
       res.status(200).send(updatedUser);
     } catch (error) {
       res.status(400).send(error);
