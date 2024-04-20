@@ -7,6 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import Header from '../components/Header';
 import { AppContext } from '../contexts/AppContext';
 import Cookies from 'js-cookie';
+import test from '../util/test';
+import VerifyCookie from '../util/VerifyCookie';
+
 
 const HomePage = () => {
  
@@ -14,67 +17,24 @@ const HomePage = () => {
   const [cookies, removeCookie] = useCookies(['token']);
   const [username, setUsername] = useState("");
   const value = useContext(AppContext)
-  // Dependency array with an empty array [] to run only once on mount
 
+  // // const data =test();
+
+  const data = VerifyCookie()
   
+  if(data===true)
+  {
+    Cookies.remove("token");
+    navigate("/login");
+  }
 
-  useEffect(() => {
-  // console.log("cdco"+process.env.BACKEND_API);
+  value.setisUserLoggedIn(data.username)
+  value.setisUserIDLoggedIn(data.userId)
   
-
-    const checkCookie = () => { const myCookie = Cookies.get('token');
-    if (myCookie) {
-        // console.log('Cookie is available:', myCookie);
-        return true;
-
-    } else {
-        return false;
-    }};
-    // console.log("envitnmentfrom home",process.env.REACT_APP_BACKEND_API)
-    const verifyCookie = async () => {  
-      try {
-        // console.log("Fetching data"); // Log before data fetch
-        const response  = await axios.post(
-          "http://localhost:4000",
-          // process.env.REACT_APP_BACKEND_API,
-          {},
-          { withCredentials: true }
-        );
-        const { data } = response;
-        const status = response.status;
-        // const userId = data.userId;
-        // const username= data.username;
-         console.log("Data:", data, data.username, data.userId);
-        
-        // console.log("Data fetched:", response); // Log fetched data
-        // const { status, user } = data;
-      
-        
-        if (status==200) {
-          setUsername(data.username);
-        value.setisUserLoggedIn(data.username)
-        value.setisUserIDLoggedIn(data.userId)
-        } else {
-          // removeCookie("token");
-          Cookies.remove("token");
-          navigate("/login");
-        }
-      } catch (error) {console.error("Error verifying cookie:", error);
-      }
-    };
-
-
-    // console.log(checkCookie())
-    if(checkCookie()){
-      verifyCookie();
-    }
-    
-  }, []); // Empty dependency array
+  // console.log("data from home page",data)
 
   // console.log(cookies)
   const Logout = () => {
-    console.log("logout");
-    // removeCookie("token", { path: '/' });
     Cookies.remove("token");
     navigate("/login");
   };
@@ -85,7 +45,7 @@ const HomePage = () => {
 
       <div className="home_page">
         <h4>
-          Welcome <span>{username}</span>
+          Welcome <span>{value.isUserLoggedIn}</span>
         </h4>
         <button onClick={Logout}>LOGOUT</button>
       </div>

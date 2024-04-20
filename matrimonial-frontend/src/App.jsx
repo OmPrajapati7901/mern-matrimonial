@@ -15,21 +15,26 @@ import { AppContext } from './contexts/AppContext';
 import { useState } from 'react';
 import UserProfile from './pages/UserProfile';
 import RegisterProfile from './pages/RegisterProfile';
+import UpdateProfile from './pages/UpdateProfile';
+import VerifyCookie from './util/VerifyCookie';
 
 function App() {
   const [isUserLoggedIn, setisUserLoggedIn] = useState(undefined)
   const [isUserIDLoggedIn, setisUserIDLoggedIn] = useState(undefined)
-  console.log("envitnmentfrom app",process.env.REACT_APP_BACKEND_API)
+  // console.log("envitnmentfrom app",process.env.REACT_APP_BACKEND_API)
   return (
     <>
     <AppContext.Provider value={{isUserLoggedIn, setisUserLoggedIn, isUserIDLoggedIn, setisUserIDLoggedIn}}>
+      
     {/* <Router> */}
       <Routes>
         <Route exact path="/" element ={<Layout><HomePage/></Layout>}></Route>
         <Route exact path="/login" element ={<Layout><Login/></Layout>}></Route>
         <Route exact path="/signup" element ={<Layout><Signup/></Layout>}></Route>
         <Route exact path="/profile" element = {<Layout> <UserProfile/></Layout>}></Route>
-        <Route exact path="/profile/register" element = {<Layout> <RegisterProfile/></Layout>}></Route>
+        <Route exact path="/profile/register" element = {<Layout><RegisterProfile/></Layout>}></Route>
+        <Route exact path="/profile/update" element = {<Layout><UpdateProfile/></Layout>}></Route>
+       
       </Routes>
     {/* </Router> */}
     </AppContext.Provider>

@@ -32,7 +32,13 @@ router.post('/register', userVerification , async (req, res) => {
   // PUT to update user profile
   router.put('/profile/:id', async (req, res) => {
     try {
+      
+      // const email='662141ff1ede2e2cb54c3756'
+      //req.params.id
+      // console.log("from user routes",req.params.id)
       const updatedUser = await UserProfile.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      // const updatedUser = await UserProfile.findOneAndUpdate(email, req.body, { new: true });
+      console.log("from user routes")
       res.status(200).send(updatedUser);
     } catch (error) {
       res.status(400).send(error);
