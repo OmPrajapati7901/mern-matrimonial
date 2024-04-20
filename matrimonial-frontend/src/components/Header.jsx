@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { AppContext } from '../contexts/AppContext';
 
 const Header = () => {
- 
+
   const value= useContext(AppContext)
+  console.log(value)
   return (
     <div><header class="text-gray-600 body-font">
       
@@ -19,7 +20,17 @@ const Header = () => {
         <a class="mr-5 hover:text-gray-900">First Link</a>
         <a class="mr-5 hover:text-gray-900">Second Link</a>
         <a class="mr-5 hover:text-gray-900">Third Link</a>
-        <a class="mr-5 hover:text-gray-900">Fourth Link</a>
+        {value.isUserLoggedIn?(<Link
+              to="/profile"
+              className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
+            >
+              Profile
+            </Link>):(<Link
+              to="/login"
+              className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
+            >
+              Sign In {value.isUserLoggedIn}
+            </Link>)}
       </nav>
       {value.isUserLoggedIn?(<p>Hello {value.isUserLoggedIn}</p>):(<Link
               to="/login"
@@ -27,11 +38,9 @@ const Header = () => {
             >
               Sign In {value.isUserLoggedIn}
             </Link>)}
-      
-      
     </div>
   </header></div>
   )
 }
 
-export default Header
+export default Header;

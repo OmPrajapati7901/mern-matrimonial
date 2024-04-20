@@ -30,19 +30,21 @@ const HomePage = () => {
     } else {
         return false;
     }};
-    
+    // console.log("envitnmentfrom home",process.env.REACT_APP_BACKEND_API)
     const verifyCookie = async () => {  
       try {
         // console.log("Fetching data"); // Log before data fetch
         const response  = await axios.post(
           "http://localhost:4000",
+          // process.env.REACT_APP_BACKEND_API,
           {},
           { withCredentials: true }
         );
         const { data } = response;
         const status = response.status;
-        const user = data.userId;
-        // console.log("Data:", data, data.username, data.userId);
+        // const userId = data.userId;
+        // const username= data.username;
+         console.log("Data:", data, data.username, data.userId);
         
         // console.log("Data fetched:", response); // Log fetched data
         // const { status, user } = data;
@@ -51,9 +53,10 @@ const HomePage = () => {
         if (status==200) {
           setUsername(data.username);
         value.setisUserLoggedIn(data.username)
-    
+        value.setisUserIDLoggedIn(data.userId)
         } else {
-          removeCookie("token");
+          // removeCookie("token");
+          Cookies.remove("token");
           navigate("/login");
         }
       } catch (error) {console.error("Error verifying cookie:", error);

@@ -20,8 +20,9 @@ router.post('/register', userVerification , async (req, res) => {
   // GET to retrieve user profile
   router.get('/profile/:id', async (req, res) => {
     try {
-      console.log(req.params.id)
-      const user = await UserProfile.findById(req.params.id);
+      console.log("from user routes",req.params.id)
+      const email=req.params.id
+      const user = await UserProfile.findOne({email});
       res.status(200).send(user);
     } catch (error) {
       res.status(404).send({ message: 'User not found' });
